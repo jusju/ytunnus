@@ -28,11 +28,12 @@ public class YTunnusGeneraattori {
 		int jakojaannos = tulojenSumma % 11;
 		int tarkistusNumero = 1;
 		if (jakojaannos == 0) {
-			if (tarkistusNumero == 0) {
-				yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
-			}
-		} else {
+			yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
+			return yTunnuksenAlkuOsa;
+		} else if (jakojaannos >= 2 && jakojaannos <= 10) {
 			tarkistusNumero = 11 - jakojaannos;
+		} else {
+			tarkistusNumero = 1;
 		}
 		while (tarkistusNumero == 1) {
 			yTunnuksenAlkuOsa = "";
@@ -49,16 +50,18 @@ public class YTunnusGeneraattori {
 			jakojaannos = tulojenSumma % 11;
 			tarkistusNumero = 1;
 			if (jakojaannos == 0) {
-				if (tarkistusNumero == 0) {
-					yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
-				}
-			} else {
+				yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
+				return yTunnuksenAlkuOsa;				
+
+			} else if (jakojaannos >= 2 && jakojaannos <= 10) {
 				tarkistusNumero = 11 - jakojaannos;
+			} else {
+				tarkistusNumero = 1;
 			}
 		}
 
 		yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-" + tarkistusNumero;
-		//System.out.println(yTunnuksenAlkuOsa);
+		// System.out.println(yTunnuksenAlkuOsa);
 		return yTunnuksenAlkuOsa;
 	}
 
@@ -90,24 +93,24 @@ public class YTunnusGeneraattori {
 		String yTunnus2 = "0737546-2";
 
 		if (tarkistaYTunnus(yTunnus1)) {
-			System.out.println("Y-tunnus on validi.");
+			System.out.println("Y-tunnus 1572860-0 on validi.");
 		} else {
-			System.out.println("Y-tunnus ei ole validi.");
+			System.out.println("Y-tunnus 1572860-0 ei ole validi.");
 		}
 
 		if (tarkistaYTunnus(yTunnus2)) {
-			System.out.println("Y-tunnus on validi.");
+			System.out.println("Y-tunnus 0737546-2 on validi.");
 		} else {
-			System.out.println("Y-tunnus ei ole validi.");
+			System.out.println("Y-tunnus 0737546-2 ei ole validi.");
 		}
-		
+
 		for (int i = 0; i < 8; i++) {
 			String yTunnus = generoiYTunnus();
 			if (tarkistaYTunnus(yTunnus)) {
-				System.out.println("Y-tunnus on validi.");
+				System.out.println("Y-tunnus " + yTunnus + " on validi.");
 			} else {
-				System.out.println("Y-tunnus ei ole validi.");
-			}			
+				System.out.println("Y-tunnus " + yTunnus + " ei ole validi.");
+			}
 		}
 	}
 }
