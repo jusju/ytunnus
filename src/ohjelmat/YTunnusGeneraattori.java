@@ -104,13 +104,5 @@ public class YTunnusGeneraattori {
 			System.out.println("Y-tunnus 0737546-2 ei ole validi.");
 		}
 
-		for (int i = 0; i < 8; i++) {
-			String yTunnus = generoiYTunnus();
-			if (tarkistaYTunnus(yTunnus)) {
-				System.out.println("Y-tunnus " + yTunnus + " on validi.");
-			} else {
-				System.out.println("Y-tunnus " + yTunnus + " ei ole validi.");
-			}
-		}
 	}
 }
