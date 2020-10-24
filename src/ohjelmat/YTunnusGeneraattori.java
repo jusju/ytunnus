@@ -106,5 +106,22 @@ public class YTunnusGeneraattori {
 			System.out.println("Y-tunnus 0737546-2 ei ole validi.");
 		}
 
+		if (tarkistaYTunnus(yTunnus3)) {
+			System.out.println("Y-tunnus 1572860-1 on validi.");
+		} else {
+			System.out.println("Y-tunnus 1572860-1 ei ole validi.");
+		}
+
+		if (tarkistaYTunnus(yTunnus4)) {
+			System.out.println("Y-tunnus 0737544-9 on validi.");
+		} else {
+			System.out.println("Y-tunnus 0737544-9 ei ole validi.");
+		}
+		
+
+		
+		
+		
+		
 	}
 }
