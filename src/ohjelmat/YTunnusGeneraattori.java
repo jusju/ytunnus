@@ -58,7 +58,7 @@ public class YTunnusGeneraattori {
 		}
 
 		yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-" + tarkistusNumero;
-		System.out.println(yTunnuksenAlkuOsa);
+		//System.out.println(yTunnuksenAlkuOsa);
 		return yTunnuksenAlkuOsa;
 	}
 
