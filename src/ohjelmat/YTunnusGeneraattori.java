@@ -91,7 +91,9 @@ public class YTunnusGeneraattori {
 	public static void main(String[] args) {
 		String yTunnus1 = "1572860-0";
 		String yTunnus2 = "0737546-2";
-
+		String yTunnus3 = "1572860-1";
+		String yTunnus4 = "0737544-9";
+		
 		if (tarkistaYTunnus(yTunnus1)) {
 			System.out.println("Y-tunnus 1572860-0 on validi.");
 		} else {
