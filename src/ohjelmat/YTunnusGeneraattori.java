@@ -57,7 +57,7 @@ public class YTunnusGeneraattori {
 			}
 		}
 
-		yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-" + tarkistusNumero; 
+		yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-" + tarkistusNumero;
 		System.out.println(yTunnuksenAlkuOsa);
 		return yTunnuksenAlkuOsa;
 	}
@@ -89,23 +89,25 @@ public class YTunnusGeneraattori {
 		String yTunnus1 = "1572860-0";
 		String yTunnus2 = "0737546-2";
 
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
-		generoiYTunnus();
+		if (tarkistaYTunnus(yTunnus1)) {
+			System.out.println("Y-tunnus on validi.");
+		} else {
+			System.out.println("Y-tunnus ei ole validi.");
+		}
 
-		/*
-		 * if(tarkistaYTunnus(yTunnus1)) { System.out.println("Y-tunnus on validi."); }
-		 * else { System.out.println("Y-tunnus ei ole validi."); }
-		 * 
-		 * if(tarkistaYTunnus(yTunnus2)) { System.out.println("Y-tunnus on validi."); }
-		 * else { System.out.println("Y-tunnus ei ole validi."); }
-		 */
+		if (tarkistaYTunnus(yTunnus2)) {
+			System.out.println("Y-tunnus on validi.");
+		} else {
+			System.out.println("Y-tunnus ei ole validi.");
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			String yTunnus = generoiYTunnus();
+			if (tarkistaYTunnus(yTunnus)) {
+				System.out.println("Y-tunnus on validi.");
+			} else {
+				System.out.println("Y-tunnus ei ole validi.");
+			}			
+		}
 	}
 }
