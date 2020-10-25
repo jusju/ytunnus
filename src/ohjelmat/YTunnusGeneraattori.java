@@ -3,89 +3,61 @@ package ohjelmat;
 import java.util.Random;
 
 /**
- * L�hde: https://tarkistusmerkit.teppovuori.fi/tarkmerk.htm#y-tunnus2
+ * Lähde: https://tarkistusmerkit.teppovuori.fi/tarkmerk.htm#y-tunnus2
  * 
- * @author Jukka Juslin
+ * @author Teemu Havulinna, Jukka Juslin
  *
  */
 
 public class YTunnusGeneraattori {
 
+	private static final Random random = new Random();
+
 	public static String generoiYTunnus() {
-		Random random = new Random();
-		String yTunnuksenAlkuOsa = "";
-		for (int i = 0; i < 7; i++) {
-			int yksiLuku = random.nextInt(10);
-			yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + yksiLuku;
-		}
-
-		int[] kertoimet = { 7, 9, 10, 5, 8, 4, 2 };
-		int tulojenSumma = 0;
-		for (int i = 0; i < kertoimet.length; i++) {
-			int kertolasku = kertoimet[i] * Integer.parseInt(yTunnuksenAlkuOsa.charAt(i) + "");
-			tulojenSumma = tulojenSumma + kertolasku;
-		}
-		int jakojaannos = tulojenSumma % 11;
-		int tarkistusNumero = 1;
-		if (jakojaannos == 0) {
-			yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
-			return yTunnuksenAlkuOsa;
-		} else if (jakojaannos >= 2 && jakojaannos <= 10) {
-			tarkistusNumero = 11 - jakojaannos;
+		int numerot = random.nextInt(10_000_000);
+		String alkuosa = String.format("%07d", numerot);
+		int tarkistusNumero = laskeTarkistusNumero(alkuosa);
+		if (tarkistusNumero >= 0) {
+			return alkuosa + "-" + tarkistusNumero;
 		} else {
-			tarkistusNumero = 1;
+			return generoiYTunnus();
 		}
-		while (tarkistusNumero == 1) {
-			yTunnuksenAlkuOsa = "";
-			for (int i = 0; i < 7; i++) {
-				int yksiLuku = random.nextInt(10);
-				yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + yksiLuku;
-			}
-
-			tulojenSumma = 0;
-			for (int i = 0; i < kertoimet.length; i++) {
-				int kertolasku = kertoimet[i] * Integer.parseInt(yTunnuksenAlkuOsa.charAt(i) + "");
-				tulojenSumma = tulojenSumma + kertolasku;
-			}
-			jakojaannos = tulojenSumma % 11;
-			tarkistusNumero = 1;
-			if (jakojaannos == 0) {
-				yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-0";
-				return yTunnuksenAlkuOsa;				
-
-			} else if (jakojaannos >= 2 && jakojaannos <= 10) {
-				tarkistusNumero = 11 - jakojaannos;
-			} else {
-				tarkistusNumero = 1;
-			}
-		}
-
-		yTunnuksenAlkuOsa = yTunnuksenAlkuOsa + "-" + tarkistusNumero;
-		// System.out.println(yTunnuksenAlkuOsa);
-		return yTunnuksenAlkuOsa;
 	}
 
 	public static boolean tarkistaYTunnus(String yTunnus) {
-		int[] kertoimet = { 7, 9, 10, 5, 8, 4, 2 };
-		int tulojenSumma = 0;
-		for (int i = 0; i < kertoimet.length; i++) {
-			int kertolasku = kertoimet[i] * Integer.parseInt(yTunnus.charAt(i) + "");
-			tulojenSumma = tulojenSumma + kertolasku;
-		}
-		int jakojaannos = tulojenSumma % 11;
-		int tarkistusNumero = Integer.parseInt((yTunnus.charAt(8) + ""));
-		if (jakojaannos == 0) {
-			if (tarkistusNumero == 0) {
-				return true;
-			}
-		} else if (tarkistusNumero >= 2 && tarkistusNumero <= 9) {
-			if (tarkistusNumero == (11 - jakojaannos)) {
-				return true;
-			}
-		} else {
+		String muoto = "\\d{7}-\\d";
+
+		if (!yTunnus.matches(muoto)) {
 			return false;
 		}
-		return false;
+
+		String[] osat = yTunnus.split("-");
+		String alku = osat[0];
+		int tarkistus = Integer.parseInt(osat[1]);
+		return tarkistus == laskeTarkistusNumero(alku);
+
+	}
+
+	private static int laskeTarkistusNumero(String alkuosa) {
+		int[] kertoimet = { 7, 9, 10, 5, 8, 4, 2 };
+		int summa = 0;
+
+		for (int i = 0; i < kertoimet.length; i++) {
+			int tulo = kertoimet[i] * Integer.parseInt(alkuosa.substring(i, i + 1));
+			summa += tulo;
+		}
+
+		int jakojaannos = summa % 11;
+		if (jakojaannos == 1) {
+			// ei anneta tunnuksia, jotka tuottaisivat jakojäännöksen 1.
+			return -1;
+		} else if (jakojaannos == 0) {
+			// jos jakojäännös on 0, tarkistusnumero on 0
+			return 0;
+		} else {
+			// jos jakojäännös on 2..10, tarkistusnumero on 11 miinus jakojäännös
+			return 11 - jakojaannos;
+		}
 	}
 
 	public static void main(String[] args) {
